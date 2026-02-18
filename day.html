@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Button Example</title>
+</head>
+<body>
+    <form id="promiseForm">
+        <label for="statusInput">Set value:</label>
+        <input type="text" id="statusInput" placeholder="Type success or fail">
+        <button type="submit" id="promiseButton">Run Promise</button>
+        <p id="output"></p>
+    </form>
+
+    <script>
+        function promisefunction(userInput) {
+            return new Promise((resolve, reject) => {
+                const input = userInput.toLowerCase();
+                if (input === "success") {
+                    resolve("Promise resolved successfully!");
+                } else if (input === "fail") {
+                    reject("Promise rejected.");
+                } else {
+                    reject("Invalid input! Type 'success' or 'fail'.");
+                }
+            });
+        }
+
+        const form = document.getElementById("promiseForm");
+        const output = document.getElementById("output");
+        const statusInput = document.getElementById("statusInput");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); 
+
+            const userInput = statusInput.value.trim();
+            promisefunction(userInput)
+                .then((message) => {
+                    output.textContent = "Success: " + message;
+                    output.style.color = "blue";
+                })
+                .catch((error) => {
+                    output.textContent = "Error: " + error;
+                    output.style.color = "red";
+                });
+        });
+    </script>
+</body>
+</html>
